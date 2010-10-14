@@ -1,0 +1,31 @@
+---
+abstract: 'Minimal-configuration, read-only LDAP server'
+author:
+  - 'Alexei Znamensky <russoz@cpan.org>'
+configure_requires:
+  Module::Build: 0.36
+generated_by: 'Module::Build version 0.3607'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Net-LDAP-SimpleServer
+provides:
+  Net::LDAP::SimpleServer:
+    file: lib/Net/LDAP/SimpleServer.pm
+    version: v0.0.4
+  Net::LDAP::SimpleServer::LDIFStore:
+    file: lib/Net/LDAP/SimpleServer/LDIFStore.pm
+    version: v0.0.4
+requires:
+  Carp: 0
+  Config::General: 0
+  File::HomeDir: 0
+  File::Spec::Functions: 0
+  Scalar::Util: 0
+  Test::More: 0
+  UNIVERSAL::isa: 0
+  version: 0
+resources:
+  license: http://dev.perl.org/licenses/
+version: v0.0.4
