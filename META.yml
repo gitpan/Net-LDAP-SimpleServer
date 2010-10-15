@@ -13,7 +13,7 @@ name: Net-LDAP-SimpleServer
 provides:
   Net::LDAP::SimpleServer:
     file: lib/Net/LDAP/SimpleServer.pm
-    version: v0.0.4
+    version: v0.0.5
   Net::LDAP::SimpleServer::LDIFStore:
     file: lib/Net/LDAP/SimpleServer/LDIFStore.pm
     version: v0.0.4
@@ -28,4 +28,4 @@ requires:
   version: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: v0.0.4
+version: v0.0.5
