@@ -13,20 +13,24 @@ name: Net-LDAP-SimpleServer
 provides:
   Net::LDAP::SimpleServer:
     file: lib/Net/LDAP/SimpleServer.pm
-    version: v0.0.6
+    version: v0.0.7
   Net::LDAP::SimpleServer::LDIFStore:
     file: lib/Net/LDAP/SimpleServer/LDIFStore.pm
-    version: v0.0.4
+    version: v0.0.7
+  Net::LDAP::SimpleServer::ProtocolHandler:
+    file: lib/Net/LDAP/SimpleServer/ProtocolHandler.pm
+    version: v0.0.7
 requires:
   Carp: 0
-  Config::General: 0
   File::HomeDir: 0
   File::Spec::Functions: 0
-  Net::LDAP: 0
+  Net::LDAP: 0.4001
+  Net::LDAP::Server: 0.43
+  Net::Server: 0
   Scalar::Util: 0
   Test::More: 0
   UNIVERSAL::isa: 0
   version: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: v0.0.6
+version: v0.0.7

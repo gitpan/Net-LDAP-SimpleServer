@@ -1,94 +1,87 @@
 package Net::LDAP::SimpleServer;
 
-use warnings;
 use strict;
+use warnings;
 use Carp;
 
-use version; our $VERSION = qv('0.0.6');
+use version; our $VERSION = qv('0.0.7');
+our $personality = undef;
+
+sub import {
+    my $pkg = shift;
+    $personality = shift || 'Fork';
+
+    use Net::Server;
+    eval 'use base qw/Net::Server::' . $personality . '/';
+    die $@ if $@;
+}
 
 use File::HomeDir;
-use File::Spec::Functions qw(catfile);
+use File::Spec;
 use Scalar::Util qw(reftype);
-use Config::General qw(ParseConfig);
 use Net::LDAP::SimpleServer::LDIFStore;
+use Net::LDAP::SimpleServer::ProtocolHandler;
 
-use constant DEFAULT_CONFIG_FILE => '.ldapsimpleserver.conf';
+use constant DEFAULT_CONFIG_FILE =>
+  File::Spec->catfile( home(), '.ldapsimpleserver.conf' );
 
-sub new {
-    my ( $class, $param ) = @_;
-    my $self = bless( {}, $class );
+my $_add_option = sub {
+    my ( $prop, $template, $opt, $initial ) = @_;
 
-    my $config;
-    if ( reftype($param) eq 'HASH' ) {
+    $prop->{$opt}     = $initial;
+    $template->{$opt} = \$prop->{$opt};
+};
 
-        # $param is a hash with configuration
-        $config = $param;
-    }
-    else {
+sub options {
+    my ( $self, $template ) = @_;
+    my $prop = $self->{'ldap'};
 
-        # or a configuration file
-        my $file = $param
-          || File::Spec->catfile( home(), DEFAULT_CONFIG_FILE );
+    ### setup options in the parent classes
+    $self->SUPER::options($template);
 
-        $config = _read_config_file($file);
-        $self->{config_file} = $file;
-    }
-
-    eval { _config_ok($config); };
-    croak $@ if $@;
-
-    $self->{config} = $config;
-
-    return $self;
+    ### add a single value option
+    $_add_option->( $prop, $template, 'data',    undef );
+    $_add_option->( $prop, $template, 'root_dn', undef );
+    $_add_option->( $prop, $template, 'root_pw', undef );
 }
 
-sub _config_ok {
-    my $config = shift;
-
-    croak q{Configuration has no data file."}
-      unless exists $config->{data};
-
-    return 1;
+sub default_values {
+    return {
+        host         => '*',
+        port         => 389,
+        proto        => 'tcp',
+        root_dn      => 'cn=root',
+        root_pw      => 'ldappw',
+        syslog_ident => 'Net::LDAP::SimpleServer-'
+          . $Net::LDAP::SimpleServer::VERSION,
+        conf_file => DEFAULT_CONFIG_FILE,
+    };
 }
 
-sub _read_config_file {
-    my $file = shift;
-
-    croak q{Cannot read the configuration file "} . $file . q{".}
-      unless -r $file;
-
-    my %config = ParseConfig(
-        -ConfigFile           => $file,
-        -AllowMultiOptions    => 'no',
-        -UseApacheInclude     => 1,
-        -MergeDuplicateBlocks => 1,
-        -AutoTrue             => 1,
-        -CComments            => 0,
-    );
-
-    return \%config;
-}
-
-sub refresh_config {
+sub post_configure_hook {
     my $self = shift;
-    return unless exists $self->{config_file};
+    my $prop = $self->{'ldap'};
 
-    my $config = _read_config_file( $self->{config_file} );
+    croak q{Configuration has no "data" file!}
+      unless exists $prop->{data};
+    croak q{Cannot read data file "} . $prop->{data} . q{"}
+      unless -r $prop->{data};
 
-    eval { _config_ok($config); };
-    croak $@ if $@;
-
-    $self->{config} = $config;
+    $prop->{store} = LDIFStore->new( $prop->{data} );
 }
 
-sub _load_data {
+sub process_request {
     my $self = shift;
 
-    return unless $self->{loaded};
+    my $in      = *STDIN{IO};
+    my $out     = *STDOUT{IO};
+    my $handler = ProtocolHandler->new( $self->{ldap}->{store}, $in, $out );
 
-    $self->{store} =
-      Net::LDAP::SimpleServer::LDIFStore->new( $self->{config}->{DataFile} );
-    $self->{loaded} = 1;
+    until ( $handler->handle ) {
+
+        # empty loop
+    }
+    return;
 }
 
 1;    # Magic true value required at end of module
@@ -100,17 +93,26 @@ Net::LDAP::SimpleServer - Minimal-configuration, read-only LDAP server
 
 =head1 VERSION
 
-This document describes Net::LDAP::SimpleServer version 0.0.6
+This document describes Net::LDAP::SimpleServer version 0.0.7
 
 =head1 SYNOPSIS
 
+B<< WORK IN PROGRESS!! NOT READY TO USE YET!! >>
+
+    package MyServer;
+
     use Net::LDAP::SimpleServer;
+
+    # Or, specifying a Net::Server personality
+    use Net::LDAP::SimpleServer 'PreFork';
 
     # using default configuration file
     my $server = Net::LDAP::SimpleServer->new();
 
     # passing a specific configuration file
-    my $server = Net::LDAP::SimpleServer->new( 'ldapconfig.conf' );
+    my $server = Net::LDAP::SimpleServer->new({
+        conf_file => '/etc/ldapconfig.conf'
+    });
 
     # passing configurations in a hash
     my $server = Net::LDAP::SimpleServer->new({
@@ -131,15 +133,13 @@ The default configuration file is:
     Write a full description of the module and its features here.
     Use subsections (=head2, =head3) as appropriate.
 
-B<< WORK IN PROGRESS!! NOT READY TO USE YET!! >>
-
 As the name suggests, this module aims to implement a simple LDAP server, 
 using many components already available in CPAN. It can be used for
 prototyping and/or development purposes. This is B<NOT> intended to be a
 production-grade server, altough some brave souls in small offices might
 use it as such.
 
-As of October 2010, the server will simply load a LDIF file and serve its
+As of November 2010, the server will simply load a LDIF file and serve its
 contents through the LDAP protocol. Many operations are B<NOT> available yet,
 notably writing into the directory tree, but we would like to implement that
 in a near future.
@@ -147,16 +147,15 @@ in a near future.
 
 =head1 CONSTRUCTOR 
 
+The constructors will follow the rules defined by L<Net::Server>, but most
+notably we have the two forms below:
+
 =over
 
 =item new()
 
 Attempts to create a server by using the default configuration file,
 C<< ${HOME}/.ldapsimpleserver.conf >>.
-
-=item new( FILE )
-
-Attempts to create a server using the specified configuration file.
 
 =item new( HASHREF )
 
@@ -169,13 +168,54 @@ reference rather than reading them from a configuration file.
 
 =over
 
-=item refresh_config()
+=item options()
 
-If the server was constructed using a configuration file, this method
-will attempt to reload the options from that file.
+As specified in L<Net::Server>, this method creates new options for the,
+server, namely:
+
+=over
+
+data - the LDIF data file used by LDIFStore
+
+root_dn - the administrator DN of the repository
+
+root_pw - the password for root_dn
 
 =back
 
+=item default_values()
+
+As specified in L<Net::Server>, this method provides default values for a
+number of options. In Net::LDAP::SimpleServer, this method is defined as:
+
+    sub default_values {
+        return {
+            host         => '*',
+            port         => 389,
+            proto        => 'tcp',
+            root_id      => 'cn=root',
+            root_pw      => 'ldappw',
+            syslog_ident => 'Net::LDAP::SimpleServer-'
+                . $Net::LDAP::SimpleServer::VERSION,
+            conf_file => DEFAULT_CONFIG_FILE,
+        };
+    }
+
+Notice that we do set a default password for the C<< cn=root >> DN. This
+allows for out-of-the-box testing, but make sure you change the password
+when putting this to production use.
+
+=item post_configure_hook()
+
+Method specified by L<Net::Server> to validate the passed options
+
+=item process_request()
+
+Method specified by L<Net::Server> to actually handle one connection. In this
+module it basically delegates the processing to
+L<Net::LDAP::SimpleServer::ProtocolHandler>.
+
+=back
 
 =head1 DIAGNOSTICS
 
@@ -231,6 +271,14 @@ C<< ${HOME}/.ldapsimpleserver.conf >>.
     including any restrictions on versions, and an indication whether
     the module is part of the standard Perl distribution, part of the
     module's distribution, or must be installed separately. ]
+
+L<< Net::LDAP >>
+
+L<< Net::LDAP::Server >>
+
+L<< Net::Server >>
+
+L<< UNIVERSAL::isa >>
 
 L<< Carp >>
 
