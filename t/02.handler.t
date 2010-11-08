@@ -1,9 +1,10 @@
-use Test::More tests => 1;
+use Test::More tests => 2;
 
 use Net::LDAP::SimpleServer::LDIFStore;
 use Net::LDAP::SimpleServer::ProtocolHandler;
 
-my $store = Net::LDAP::SimpleServer::LDIFStore->new('examples/test1.ldif');
+my $store =
+  Net::LDAP::SimpleServer::LDIFStore->new('examples/single-entry.ldif');
 
 sub _check_param {
     my @p = @_;
@@ -23,10 +24,9 @@ sub check_param_failure {
 
 diag("Testing the constructor params for ProtocolHandler\n");
 
-my $obj = undef;
-
-$obj = new_ok(
+my $obj = new_ok(
     'Net::LDAP::SimpleServer::ProtocolHandler',
     [ $store, *STDIN{IO}, *STDOUT{IO} ]
 );
 
+check_param_failure('non/existent/file.ldif');

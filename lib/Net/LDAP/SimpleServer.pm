@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Carp;
 
-use version; our $VERSION = qv('0.0.9');
+use version; our $VERSION = qv('0.0.10');
 our $personality = undef;
 
 sub import {
@@ -16,14 +16,18 @@ sub import {
     die $@ if $@;
 }
 
+use File::Basename;
 use File::HomeDir;
 use File::Spec;
-use Scalar::Util qw(reftype);
+use File::Path qw{make_path};
+use Scalar::Util qw{reftype};
 use Net::LDAP::SimpleServer::LDIFStore;
 use Net::LDAP::SimpleServer::ProtocolHandler;
 
-use constant DEFAULT_CONFIG_FILE =>
-  File::Spec->catfile( home(), '.ldapsimpleserver.conf' );
+use constant BASEDIR => File::Spec->catfile( home(),  '.ldapsimpleserver' );
+use constant LOGDIR  => File::Spec->catfile( BASEDIR, 'log' );
+use constant DEFAULT_CONFIG_FILE => File::Spec->catfile( BASEDIR, 'config' );
+use constant DEFAULT_DATA_FILE => File::Spec->catfile( BASEDIR, 'server.ldif' );
 
 my $_add_option = sub {
     my ( $prop, $template, $opt, $initial ) = @_;
@@ -52,19 +56,37 @@ sub default_values {
         proto        => 'tcp',
         root_dn      => 'cn=root',
         root_pw      => 'ldappw',
+        log_file     => File::Spec->catfile( LOGDIR, 'server.log' ),
+        pid_file     => File::Spec->catfile( LOGDIR, 'server.pid' ),
+        conf_file    => -r DEFAULT_CONFIG_FILE ? DEFAULT_CONFIG_FILE : undef,
+        data         => -r DEFAULT_DATA_FILE ? DEFAULT_DATA_FILE : undef,
         syslog_ident => 'Net::LDAP::SimpleServer-'
           . $Net::LDAP::SimpleServer::VERSION,
-        conf_file => DEFAULT_CONFIG_FILE,
     };
+}
+
+sub _make_dir {
+    my $file = shift;
+    return unless $file;
+
+    my $dir = dirname($file);
+    return unless $dir;
+    return if -d $dir;
+
+    make_path($dir);
 }
 
 sub post_configure_hook {
     my $self = shift;
     my $prop = $self->{'ldap'};
 
+    croak q{Cannot find conf file "} . $self->{server}->{conf_file} . q{"}
+      if $self->{server}->{conf_file} and not -r $self->{server}->{conf_file};
+    _make_dir( $self->{server}->{log_file} );
+    _make_dir( $self->{server}->{pid_file} );
     croak q{Configuration has no "data" file!}
       unless exists $prop->{data};
-    croak q{Cannot read data file "} . $prop->{data} . q{"}
+    croak qq{Cannot read data file "} . $prop->{data} . q{"}
       unless -r $prop->{data};
 
     $prop->{store} = LDIFStore->new( $prop->{data} );
@@ -121,7 +143,7 @@ B<< WORK IN PROGRESS!! NOT READY TO USE YET!! >>
 
 The default configuration file is:
 
-    ${HOME}/.ldapsimpleserver.conf
+    ${HOME}/.ldapsimpleserver/config
 
 =head1 DESCRIPTION
 
@@ -151,7 +173,7 @@ notably we have the two forms below:
 =item new()
 
 Attempts to create a server by using the default configuration file,
-C<< ${HOME}/.ldapsimpleserver.conf >>.
+C<< ${HOME}/.ldapsimpleserver/config >>.
 
 =item new( HASHREF )
 
@@ -248,7 +270,7 @@ L<Net::LDAP::SimpleServer::ProtocolHandler>.
 Net::LDAP::SimpleServer may use a configuration file to specify the
 server settings. If no file is specified and options are not passed
 in a hash, this module will look for a default configuration file named
-C<< ${HOME}/.ldapsimpleserver.conf >>. 
+C<< ${HOME}/.ldapsimpleserver/config >>. 
 
     data /path/to/a/ldif/file.ldif
     #port 389
