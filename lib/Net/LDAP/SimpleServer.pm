@@ -1,9 +1,15 @@
 package Net::LDAP::SimpleServer;
 
+use strict;
+use warnings;
+
+# ABSTRACT: Minimal-configuration, read-only LDAP server
+
+our $VERSION = '0.0.13';    # VERSION
+
 use Carp;
 use common::sense;
 
-use version; our $VERSION = qv('0.0.12');
 our $personality = undef;
 
 sub import {
@@ -11,7 +17,7 @@ sub import {
     $personality = shift || 'Fork';
 
     use Net::Server;
-    eval "use base qw{Net::Server::$personality}";
+    eval "use base qw{Net::Server::$personality}";    ## no critic
     croak $@ if $@;
 
     @Net::LDAP::SimpleServer::ISA = qw(Net::Server);
@@ -19,6 +25,7 @@ sub import {
     #use Data::Dumper;
     #print STDERR Data::Dumper->Dump( [ \@Net::LDAP::SimpleServer::ISA ],
     #    ['ISA'] );
+    return;
 }
 
 use File::Basename;
@@ -29,10 +36,14 @@ use Scalar::Util qw{reftype};
 use Net::LDAP::SimpleServer::LDIFStore;
 use Net::LDAP::SimpleServer::ProtocolHandler;
 
+## no critic
 use constant BASEDIR => File::Spec->catfile( home(),  '.ldapsimpleserver' );
 use constant LOGDIR  => File::Spec->catfile( BASEDIR, 'log' );
 use constant DEFAULT_CONFIG_FILE => File::Spec->catfile( BASEDIR, 'config' );
 use constant DEFAULT_DATA_FILE => File::Spec->catfile( BASEDIR, 'server.ldif' );
+## use critic
+
+make_path(LOGDIR);
 
 my $_add_option = sub {
     my ( $template, $prop, $opt, $initial ) = @_;
@@ -54,6 +65,7 @@ sub options {
 
     #use Data::Dumper;
     #print STDERR Data::Dumper->Dump( [$self], ['options_END'] );
+    return;
 }
 
 sub default_values {
@@ -82,6 +94,7 @@ sub _make_dir {
     return if -d $dir;
 
     make_path($dir);
+    return;
 }
 
 sub post_configure_hook {
@@ -102,6 +115,7 @@ sub post_configure_hook {
     $prop->{store} =
          Net::LDAP::SimpleServer::LDIFStore->new( $prop->{ldap_data} )
       || croak q{Cannot create data store!};
+    return;
 }
 
 sub process_request {
@@ -122,11 +136,20 @@ sub process_request {
 }
 
 1;    # Magic true value required at end of module
-__END__
+
+
+
+=pod
+
+=encoding utf-8
 
 =head1 NAME
 
 Net::LDAP::SimpleServer - Minimal-configuration, read-only LDAP server
+
+=head1 VERSION
+
+version 0.0.13
 
 =head1 SYNOPSIS
 
@@ -166,7 +189,7 @@ The default configuration file is:
     Write a full description of the module and its features here.
     Use subsections (=head2, =head3) as appropriate.
 
-As the name suggests, this module aims to implement a simple LDAP server, 
+As the name suggests, this module aims to implement a simple LDAP server,
 using many components already available in CPAN. It can be used for
 prototyping and/or development purposes. This is B<NOT> intended to be a
 production-grade server, altough some brave souls in small offices might
@@ -177,8 +200,7 @@ contents through the LDAP protocol. Many operations are B<NOT> available yet,
 notably writing into the directory tree, but we would like to implement that
 in a near future.
 
-
-=head1 CONSTRUCTOR 
+=head1 CONSTRUCTOR
 
 The constructors will follow the rules defined by L<Net::Server>, but most
 notably we have the two forms below:
@@ -197,7 +219,7 @@ reference rather than reading them from a configuration file.
 
 =back
 
-=head1 METHODS 
+=head1 METHODS
 
 =over
 
@@ -272,7 +294,6 @@ L<Net::LDAP::SimpleServer::ProtocolHandler>.
 
 =back
 
-
 =head1 CONFIGURATION AND ENVIRONMENT
 
 =for author to fill in:
@@ -281,11 +302,11 @@ L<Net::LDAP::SimpleServer::ProtocolHandler>.
     files, and the meaning of any environment variables or properties
     that can be set. These descriptions must also include details of any
     configuration language used.
-  
+
 Net::LDAP::SimpleServer may use a configuration file to specify the
 server settings. If no file is specified and options are not passed
 in a hash, this module will look for a default configuration file named
-C<< ${HOME}/.ldapsimpleserver/config >>. 
+C<< ${HOME}/.ldapsimpleserver/config >>.
 
     ldap_data /path/to/a/ldif/file.ldif
     #port 389
@@ -295,7 +316,6 @@ C<< ${HOME}/.ldapsimpleserver/config >>.
     #user_tree dc=some,dc=subtree,dc=com
     #user_id_attr uid
     #user_pw_attr password
-
 
 =head1 DEPENDENCIES
 
@@ -325,70 +345,161 @@ L<< Config::General >>
 
 L<< Net::LDAP::SimpleServer::LDIFStore >>
 
+=for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders
 
-=head1 INCOMPATIBILITIES
+=head1 SUPPORT
 
-=for author to fill in:
-    A list of any modules that this module cannot be used in conjunction
-    with. This may be due to name conflicts in the interface, or
-    competition for system or program resources, or due to internal
-    limitations of Perl (for example, many modules that use source code
-    filters are mutually incompatible).
+=head2 Perldoc
 
-None reported.
+You can find documentation for this module with the perldoc command.
 
+  perldoc Net::LDAP::SimpleServer
 
-=head1 BUGS AND LIMITATIONS
+=head2 Websites
 
-=for author to fill in:
-    A list of known problems with the module, together with some
-    indication Whether they are likely to be fixed in an upcoming
-    release. Also a list of restrictions on the features the module
-    does provide: data types that cannot be handled, performance issues
-    and the circumstances in which they may arise, practical
-    limitations on the size of data sets, special cases that are not
-    (yet) handled, etc.
+The following websites have more information about this module, and may be of help to you. As always,
+in addition to those websites please use your favorite search engine to discover more resources.
 
-No bugs have been reported.
+=over 4
 
-Please report any bugs or feature requests to
-C<bug-net-ldap-simpleserver@rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org>.
+=item *
 
+Search CPAN
+
+The default CPAN search engine, useful to view POD in HTML format.
+
+L<http://search.cpan.org/dist/Net-LDAP-SimpleServer>
+
+=item *
+
+AnnoCPAN
+
+The AnnoCPAN is a website that allows community annonations of Perl module documentation.
+
+L<http://annocpan.org/dist/Net-LDAP-SimpleServer>
+
+=item *
+
+CPAN Ratings
+
+The CPAN Ratings is a website that allows community ratings and reviews of Perl modules.
+
+L<http://cpanratings.perl.org/d/Net-LDAP-SimpleServer>
+
+=item *
+
+CPAN Forum
+
+The CPAN Forum is a web forum for discussing Perl modules.
+
+L<http://cpanforum.com/dist/Net-LDAP-SimpleServer>
+
+=item *
+
+CPANTS
+
+The CPANTS is a website that analyzes the Kwalitee ( code metrics ) of a distribution.
+
+L<http://cpants.perl.org/dist/overview/Net-LDAP-SimpleServer>
+
+=item *
+
+CPAN Testers
+
+The CPAN Testers is a network of smokers who run automated tests on uploaded CPAN distributions.
+
+L<http://www.cpantesters.org/distro/N/Net-LDAP-SimpleServer>
+
+=item *
+
+CPAN Testers Matrix
+
+The CPAN Testers Matrix is a website that provides a visual way to determine what Perls/platforms PASSed for a distribution.
+
+L<http://matrix.cpantesters.org/?dist=Net-LDAP-SimpleServer>
+
+=back
+
+=head2 Email
+
+You can email the author of this module at C<RUSSOZ at cpan.org> asking for help with any problems you have.
+
+=head2 Internet Relay Chat
+
+You can get live help by using IRC ( Internet Relay Chat ). If you don't know what IRC is,
+please read this excellent guide: L<http://en.wikipedia.org/wiki/Internet_Relay_Chat>. Please
+be courteous and patient when talking to us, as we might be busy or sleeping! You can join
+those networks/channels and get help:
+
+=over 4
+
+=item *
+
+irc.perl.org
+
+You can connect to the server at 'irc.perl.org' and join this channel: #sao-paulo.pm then talk to this person for help: russoz.
+
+=back
+
+=head2 Bugs / Feature Requests
+
+Please report any bugs or feature requests by email to C<bug-net-ldap-simpleserver at rt.cpan.org>, or through
+the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Net-LDAP-SimpleServer>. You will be automatically notified of any
+progress on the request by the system.
+
+=head2 Source Code
+
+The code is open to the world, and available for you to hack on. Please feel free to browse it and play
+with it, or whatever. If you want to contribute patches, please send me a diff or prod me to pull
+from your repository :)
+
+L<https://github.com/russoz/Net-LDAP-SimpleServer>
+
+  git clone https://github.com/russoz/Net-LDAP-SimpleServer
 
 =head1 AUTHOR
 
-Alexei Znamensky  C<< <russoz@cpan.org> >>
+Alexei Znamensky <russoz@cpan.org>
 
+=head1 COPYRIGHT AND LICENSE
 
-=head1 LICENCE AND COPYRIGHT
+This software is copyright (c) 2011 by Alexei Znamensky.
 
-Copyright (c) 2010, Alexei Znamensky C<< <russoz@cpan.org> >>. All rights reserved.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
-This module is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself. See L<perlartistic>.
+=head1 BUGS AND LIMITATIONS
 
+No bugs have been reported.
+
+Please report any bugs or feature requests through the web interface at
+L<http://rt.cpan.org>.
 
 =head1 DISCLAIMER OF WARRANTY
 
 BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
-FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
-OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
-PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
-EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
-ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH
-YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL
-NECESSARY SERVICING, REPAIR, OR CORRECTION.
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT
+WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER
+PARTIES PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
+SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME
+THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
 
 IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
 WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
-REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE
-LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL,
-OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE
-THE SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE
+TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
 RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
 FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
-SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
-SUCH DAMAGES.
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+
+=cut
+
+
+__END__
 

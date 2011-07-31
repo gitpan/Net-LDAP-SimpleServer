@@ -1,6 +1,13 @@
 package Net::LDAP::SimpleServer::ProtocolHandler;
 
+use strict;
+use warnings;
+
 use common::sense;
+
+# ABSTRACT: LDAP protocol handler used with Net::LDAP::SimpleServer
+
+our $VERSION = '0.0.13';    # VERSION
 
 use Net::LDAP::Server;
 use base 'Net::LDAP::Server';
@@ -14,18 +21,18 @@ use UNIVERSAL::isa;
 
 use Data::Dumper;
 
-use version; our $VERSION = qv('0.0.12');
-
 my %_ldap_cache = ();
 
 sub _get_ldap_constant {
     my $code = shift;
     return $code if looks_like_number($code);
     return $_ldap_cache{$code} if exists $_ldap_cache{$code};
+    ## no critic
     return $_ldap_cache{$code} = eval qq{
         use Net::LDAP::Constant qw|$code|;
         $code;
     };
+    ## use critic
 }
 
 sub _make_result {
@@ -67,7 +74,7 @@ sub new {
     return $self;
 }
 
-sub bind {
+sub bind {    ## no critic
 
     #    my $r = _bind(@_);
     #    print STDERR q{response = } . Dumper($r);
@@ -106,12 +113,29 @@ sub bind {
     return $ok;
 }
 
+sub search {
+    my ( $self, $request ) = @_;
+
+    print STDERR '=' x 70 . "\n";
+    print STDERR Dumper($request);
+
+    return _make_result(qw/LDAP_SUCCESS/);
+}
+
 1;    # Magic true value required at end of module
-__END__
+
+
+=pod
+
+=encoding utf-8
 
 =head1 NAME
 
-Net::LDAP::SimpleServer::ProtocolHandler - LDAP protocol handler used with C<Net::LDAP::SimpleServer>
+Net::LDAP::SimpleServer::ProtocolHandler - LDAP protocol handler used with Net::LDAP::SimpleServer
+
+=head1 VERSION
+
+version 0.0.13
 
 =head1 SYNOPSIS
 
@@ -131,7 +155,9 @@ This module provides an interface between Net::LDAP::SimpleServer and the
 underlying data store. Currently only L<Net::LDAP::SimpleServer::LDIFStore>
 is available.
 
-=head1 CONSTRUCTOR 
+=head1 NAME
+
+=head1 CONSTRUCTOR
 
 =over
 
@@ -150,6 +176,10 @@ as in the L<Net::LDAP::Server> module.
 =item bind( REQUEST )
 
 Handles a bind REQUEST from the LDAP client.
+
+=item search( REQUEST )
+
+Performs a search in the data store
 
 =back
 
@@ -176,7 +206,7 @@ Handles a bind REQUEST from the LDAP client.
     files, and the meaning of any environment variables or properties
     that can be set. These descriptions must also include details of any
     configuration language used.
-  
+
 Net::LDAP::SimpleServer::ProtocolHandler requires no configuration files or environment variables.
 
 =head1 DEPENDENCIES
@@ -203,7 +233,7 @@ None reported.
 
 =head1 BUGS AND LIMITATIONS
 
-This store does not yet support writing to a LDIF file, which makes the 
+This store does not yet support writing to a LDIF file, which makes the
 C<< Net::LDAP::SimpleServer >> a read-only server.
 
 No bugs have been reported.
@@ -222,7 +252,6 @@ Copyright (c) 2010, Alexei Znamensky C<< <russoz@cpan.org> >>. All rights reserv
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
-
 
 =head1 DISCLAIMER OF WARRANTY
 
@@ -246,4 +275,62 @@ RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
 FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
 SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGES.
+
+=head1 SEE ALSO
+
+Please see those modules/websites for more information related to this module.
+
+=over 4
+
+=item *
+
+L<Net::LDAP::SimpleServer|Net::LDAP::SimpleServer>
+
+=back
+
+=head1 AUTHOR
+
+Alexei Znamensky <russoz@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Alexei Znamensky.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 BUGS AND LIMITATIONS
+
+No bugs have been reported.
+
+Please report any bugs or feature requests through the web interface at
+L<http://rt.cpan.org>.
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT
+WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER
+PARTIES PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE
+SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME
+THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE
+TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR
+CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
+DAMAGES.
+
+=cut
+
+
+__END__
 

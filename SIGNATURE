@@ -1,0 +1,74 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.68.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 62d419e1f5d9d7af4a91042250852b6be439732f Changes
+SHA1 37edf45d922e03261701e9f03425aecbd8e68bad INSTALL
+SHA1 06abad21694ddb03c0fd03ba52d6d652ca43856e LICENSE
+SHA1 05673d00b3c0c47e82afcd3082d771dd7c889d9c MANIFEST
+SHA1 e77faee81349724a35f9e6346330edbd91cce497 META.json
+SHA1 02fea1949953065562328f70c883bd9e2d976298 META.yml
+SHA1 a0b0252349a4a851cebb0cdd194e34125c5f32cf Makefile.PL
+SHA1 ca96018f5b6a282fda6829638f87eccc3015778d README
+SHA1 c1531bc200ad0cfd81b3e934b3f4500ef45d20b6 TODO
+SHA1 2b8ddea60212c53b90db654caab41f1a09f8668f dev/mkdist
+SHA1 0f08fa81071262b6f5fd1abd8e93d58bb1a03daf dist.ini
+SHA1 ea82a04fc39c459f5900be61707079f468b1ecc5 examples/empty.conf
+SHA1 6d873b1618611d67903f4a82e980fa0e779e5ee9 examples/single-entry.conf
+SHA1 d9c2eee01ba07542302ebada78e0fad09724ce39 examples/single-entry.ldif
+SHA1 a823653da8423d054e060327b22109b930f2f64f lib/Net/LDAP/SimpleServer.pm
+SHA1 26d6fa20e6532095b92a33c265e1902895ef5800 lib/Net/LDAP/SimpleServer/LDIFStore.pm
+SHA1 28ce3d642150c385cf23cf8a3f86b9e6f4070108 lib/Net/LDAP/SimpleServer/ProtocolHandler.pm
+SHA1 dd729107f22582796aa0af9acb0f1e975f2251a5 t/00-compile.t
+SHA1 86cd488198ef1835477613f6a2256994986660aa t/00-load.t
+SHA1 6136c77964ff1e5a8eb10161ae6c8cff6cd81245 t/000-report-versions-tiny.t
+SHA1 3deca536755bf1acb1cf2425857bc03e6f7cba73 t/01-load-handler.t
+SHA1 95a26ebd3326ada3bb99f4099e7d627ed54dc2fb t/01-load-store.t
+SHA1 84cbabc93390824f5301fdf434a108886d341b88 t/02-handler.t
+SHA1 2cb19e2bfa735660e6d406b4889e9d45ac68f10a t/02-store.t
+SHA1 5a987ab63a928c136930b2c42eac4cb14e6308cf t/03-param.t
+SHA1 4031ed1f99ebac90481aae158b1e30ae5c3ca244 t/04-bind.t
+SHA1 f214de96cfe8b70da71201ab8859bb32cbdafe1d t/author-critic.t
+SHA1 48d42cc9f55d5ce8ae812dab536a9d17f1c3f98d t/release-dist-manifest.t
+SHA1 9e4c697537049f3151d38c81d5080be36b600771 t/release-distmeta.t
+SHA1 52f8153d160cb76d2ba52d0a9c8e8dff928145ee t/release-eol.t
+SHA1 083d9cf27e0bc6a123241fb0a361a2c029983b0c t/release-kwalitee.t
+SHA1 d10a4c4f4a6c10595f86bd7acf935ae72354f8d0 t/release-meta-json.t
+SHA1 978fcdcd038d17814e4a2429f19795a77894f1a1 t/release-minimum-version.t
+SHA1 b567cfd8c64cdcda2a465f38a1dc2fd971904ee4 t/release-mojibake.t
+SHA1 a95be7f18c2443b36947e6a2888ff14742899350 t/release-no-tabs.t
+SHA1 ecd6305379975ecc5ce20f4c3e76bfcfe462e2d4 t/release-pod-coverage.t
+SHA1 c3bec8aa8475c5ec46a0bad17a20d44d4ea1b1b8 t/release-pod-linkcheck.t
+SHA1 7eb3492f9c47f10f80d4f285e96536e9192026dc t/release-pod-syntax.t
+SHA1 4bca0ddd8e339fe70776a13cb4551864fbe09797 t/release-portability.t
+SHA1 dd1999e108eb2093fa41692a0a72b4b84ce8ef4e t/release-test-version.t
+SHA1 731040bf250fd7f91217bde7998666bc60ca8e90 t/release-unused-vars.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQIcBAEBAgAGBQJONX/DAAoJEMZvtcdxyp88qhMQAJfcfRLO6auBV4HOAL8mUvI9
+e9uwDKD6HSI6w2d9Z4+6ETQKEKOyXgsc09aE8PlSxlWy2+IwvoWFnjGWYAOXMOhb
+7k3Wk8fdZB+2I5BolxlpeWiy4+X0ODlNumhkA096tu8YPdpJxshLZawT2nSj+5HL
+iUsm+LMJ+qutzT5w7gYorFZ/UgarUSs5Te4anEKRlEJHMZdBtnnUg4/0Ua8P+3Zr
+MJsx0/C2SjSb9S4RVC4LP9HFLJu9/9+dYGA+r+M41LdH+61mBCNNHnQ/ouINgS1H
+xsNI34tk81lJ7qsuDTGZ/J9Xd1xRSustyV1vok2vg6/qcX/VZAKOj5Tbho8ClMyR
+JvhKb9FDOzBFM8Esvi/qBpSRWuyVcx2UoEk2wFqn9LjE7kXyqy9Or7dUYTJSPtna
+L40Keq0dq6Dwek9WOuhbvvDft/jKDWIFjDYFcV8VHbAzRrjEJ1UpEMqtR3U9/v/r
+19Ws0ivExzRWcpi+4vG+KxlBSHFyxUpUXpBNMK65O81UMeiTa1uASIEumDH1YNrk
+R2NPezkZw5HFL52v1VftkQ0rvXArAHFGVl6dDp583dF3y4a6Wb/Gly2X+aN23zhY
+jPrC2EMmES1fzdpyJFPGZ9r6ZsuX5ewds5Ffn3uhZSkCuxTkvSBldtmtxx0uGYhF
+Mhw+COzX1DGksUHWhXy6
+=noV3
+-----END PGP SIGNATURE-----

@@ -28,4 +28,3 @@ check_param_failure('name/of/a/file/that/will/never/ever/exist.ldif');
 $obj =
   new_ok( 'Net::LDAP::SimpleServer::LDIFStore',
     ['examples/single-entry.ldif'] );
-
