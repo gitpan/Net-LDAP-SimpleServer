@@ -12,7 +12,7 @@ my $v = "\n";
 
 eval {                     # no excuses!
     # report our Perl details
-    my $want = '5.006';
+    my $want = '5.010';
     my $pv = ($^V || $]);
     $v .= "perl: $pv (wanted $want) on $^O from $^X\n\n";
 };
@@ -55,7 +55,7 @@ eval { $v .= pmver('ExtUtils::MakeMaker','6.30') };
 eval { $v .= pmver('File::Basename','any version') };
 eval { $v .= pmver('File::Find','any version') };
 eval { $v .= pmver('File::HomeDir','any version') };
-eval { $v .= pmver('File::Path','any version') };
+eval { $v .= pmver('File::Path','2.08') };
 eval { $v .= pmver('File::Spec','any version') };
 eval { $v .= pmver('File::Temp','any version') };
 eval { $v .= pmver('IO::Pipe','any version') };

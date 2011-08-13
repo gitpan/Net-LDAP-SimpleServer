@@ -8,7 +8,6 @@ Makefile.PL
 README
 SIGNATURE
 TODO
-dev/mkdist
 dist.ini
 examples/empty.conf
 examples/single-entry.conf
@@ -19,8 +18,6 @@ lib/Net/LDAP/SimpleServer/ProtocolHandler.pm
 t/00-compile.t
 t/00-load.t
 t/000-report-versions-tiny.t
-t/01-load-handler.t
-t/01-load-store.t
 t/02-handler.t
 t/02-store.t
 t/03-param.t

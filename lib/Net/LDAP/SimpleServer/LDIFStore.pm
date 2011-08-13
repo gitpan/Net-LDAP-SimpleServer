@@ -6,9 +6,10 @@ use diagnostics;
 
 # ABSTRACT: Data store to support Net::LDAP::SimpleServer
 
-our $VERSION = '0.0.13';    # VERSION
+our $VERSION = '0.0.14';    # VERSION
 
-use Carp;
+use 5.010;
+use Carp qw/carp croak/;
 use UNIVERSAL::isa;
 use Scalar::Util qw(blessed reftype);
 use Net::LDAP::LDIF;
@@ -119,7 +120,7 @@ Net::LDAP::SimpleServer::LDIFStore - Data store to support Net::LDAP::SimpleServ
 
 =head1 VERSION
 
-version 0.0.13
+version 0.0.14
 
 =head1 SYNOPSIS
 

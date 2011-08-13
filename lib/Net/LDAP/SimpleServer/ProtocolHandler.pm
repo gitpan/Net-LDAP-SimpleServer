@@ -7,7 +7,7 @@ use common::sense;
 
 # ABSTRACT: LDAP protocol handler used with Net::LDAP::SimpleServer
 
-our $VERSION = '0.0.13';    # VERSION
+our $VERSION = '0.0.14';    # VERSION
 
 use Net::LDAP::Server;
 use base 'Net::LDAP::Server';
@@ -135,7 +135,7 @@ Net::LDAP::SimpleServer::ProtocolHandler - LDAP protocol handler used with Net::
 
 =head1 VERSION
 
-version 0.0.13
+version 0.0.14
 
 =head1 SYNOPSIS
 

@@ -1,6 +1,24 @@
 Revision History for Net-LDAP-SimpleServer
 ==========================================
 
+0.0.14
+------
+
+commit ad14dcea3da95d5d5b2d6c47786baf8637bcf32a
+Author: Alexei Znamensky <russoz@cpan.org>
+
+    added version spec for File::Path
+
+commit 0ecb36280bd128ae949b6aafde306772374a4b5c
+Author: Alexei Znamensky <russoz@cpan.org>
+
+    small details
+
+commit 4ec0095e112b3d653e795bbb1dc2606d4d2cd634
+Author: Alexei Znamensky <russoz@cpan.org>
+
+    using perl 5.010
+
 ===================================
 End of changes in the last 365 days
 ===================================

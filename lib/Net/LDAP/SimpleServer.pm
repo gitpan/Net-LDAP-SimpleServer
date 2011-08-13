@@ -5,8 +5,9 @@ use warnings;
 
 # ABSTRACT: Minimal-configuration, read-only LDAP server
 
-our $VERSION = '0.0.13';    # VERSION
+our $VERSION = '0.0.14';    # VERSION
 
+use 5.008;
 use Carp;
 use common::sense;
 
@@ -31,7 +32,7 @@ sub import {
 use File::Basename;
 use File::HomeDir;
 use File::Spec;
-use File::Path qw{make_path};
+use File::Path 2.08 qw{make_path};
 use Scalar::Util qw{reftype};
 use Net::LDAP::SimpleServer::LDIFStore;
 use Net::LDAP::SimpleServer::ProtocolHandler;
@@ -149,7 +150,7 @@ Net::LDAP::SimpleServer - Minimal-configuration, read-only LDAP server
 
 =head1 VERSION
 
-version 0.0.13
+version 0.0.14
 
 =head1 SYNOPSIS
 

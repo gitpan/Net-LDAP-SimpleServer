@@ -4,7 +4,7 @@
       "Alexei Znamensky <russoz@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.200012, CPAN::Meta::Converter version 2.110930001",
+   "generated_by" : "Dist::Zilla version 4.200012, CPAN::Meta::Converter version 2.112150",
    "license" : [
       "perl_5"
    ],
@@ -25,7 +25,7 @@
             "Data::Dumper" : 0,
             "File::Basename" : 0,
             "File::HomeDir" : 0,
-            "File::Path" : 0,
+            "File::Path" : "2.08",
             "File::Spec" : 0,
             "Net::LDAP::LDIF" : 0,
             "Net::LDAP::Server" : 0,
@@ -36,7 +36,8 @@
             "common::sense" : 0,
             "constant" : 0,
             "diagnostics" : 0,
-            "fields" : 0
+            "fields" : 0,
+            "perl" : "5.010"
          }
       },
       "test" : {
@@ -48,8 +49,7 @@
             "Net::LDAP" : 0,
             "Proc::Fork" : 0,
             "Test::More" : "0.88",
-            "Test::UseAllModules" : 0,
-            "perl" : "5.006"
+            "Test::UseAllModules" : 0
          }
       }
    },
@@ -63,6 +63,6 @@
          "web" : "https://github.com/russoz/Net-LDAP-SimpleServer"
       }
    },
-   "version" : "0.0.13"
+   "version" : "0.0.14"
 }
 

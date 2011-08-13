@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-
+use 5.010;
 
 use ExtUtils::MakeMaker 6.30;
 
@@ -19,8 +19,7 @@ my %WriteMakefileArgs = (
     'Net::LDAP' => '0',
     'Proc::Fork' => '0',
     'Test::More' => '0.88',
-    'Test::UseAllModules' => '0',
-    'perl' => '5.006'
+    'Test::UseAllModules' => '0'
   },
   'CONFIGURE_REQUIRES' => {
     'ExtUtils::MakeMaker' => '6.30'
@@ -34,7 +33,7 @@ my %WriteMakefileArgs = (
     'Data::Dumper' => '0',
     'File::Basename' => '0',
     'File::HomeDir' => '0',
-    'File::Path' => '0',
+    'File::Path' => '2.08',
     'File::Spec' => '0',
     'Net::LDAP::LDIF' => '0',
     'Net::LDAP::Server' => '0',
@@ -47,7 +46,7 @@ my %WriteMakefileArgs = (
     'diagnostics' => '0',
     'fields' => '0'
   },
-  'VERSION' => '0.0.13',
+  'VERSION' => '0.0.14',
   'test' => {
     'TESTS' => 't/*.t'
   }
