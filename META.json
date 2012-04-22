@@ -4,7 +4,7 @@
       "Alexei Znamensky <russoz@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.200012, CPAN::Meta::Converter version 2.112150",
+   "generated_by" : "Dist::Zilla version 4.300014, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -21,35 +21,39 @@
       },
       "runtime" : {
          "requires" : {
-            "Carp" : 0,
-            "Data::Dumper" : 0,
-            "File::Basename" : 0,
-            "File::HomeDir" : 0,
+            "Carp" : "0",
+            "Data::Dumper" : "0",
+            "File::Basename" : "0",
+            "File::HomeDir" : "0",
             "File::Path" : "2.08",
-            "File::Spec" : 0,
-            "Net::LDAP::LDIF" : 0,
-            "Net::LDAP::Server" : 0,
-            "Net::LDAP::Util" : 0,
-            "Net::Server" : 0,
-            "Scalar::Util" : 0,
-            "UNIVERSAL::isa" : 0,
-            "common::sense" : 0,
-            "constant" : 0,
-            "diagnostics" : 0,
-            "fields" : 0,
-            "perl" : "5.010"
+            "File::Spec" : "0",
+            "Net::LDAP::FilterMatch" : "0",
+            "Net::LDAP::LDIF" : "0",
+            "Net::LDAP::Server" : "0",
+            "Net::LDAP::Util" : "0",
+            "Net::Server" : "0",
+            "Scalar::Util" : "0",
+            "UNIVERSAL::isa" : "0",
+            "base" : "0",
+            "common::sense" : "0",
+            "constant" : "0",
+            "diagnostics" : "0",
+            "fields" : "0",
+            "perl" : "5.010",
+            "strict" : "0",
+            "warnings" : "0"
          }
       },
       "test" : {
          "requires" : {
-            "English" : 0,
-            "File::Find" : 0,
-            "File::Temp" : 0,
-            "IO::Pipe" : 0,
-            "Net::LDAP" : 0,
-            "Proc::Fork" : 0,
+            "English" : "0",
+            "File::Find" : "0",
+            "File::Temp" : "0",
+            "IO::Pipe" : "0",
+            "Net::LDAP" : "0",
+            "Proc::Fork" : "0",
             "Test::More" : "0.88",
-            "Test::UseAllModules" : 0
+            "Test::UseAllModules" : "0"
          }
       }
    },
@@ -59,10 +63,10 @@
       "homepage" : "https://github.com/russoz/Net-LDAP-SimpleServer",
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/russoz/Net-LDAP-SimpleServer",
+         "url" : "https://github.com/russoz/Net-LDAP-SimpleServer.git",
          "web" : "https://github.com/russoz/Net-LDAP-SimpleServer"
       }
    },
-   "version" : "0.0.14"
+   "version" : "0.0.15"
 }
 

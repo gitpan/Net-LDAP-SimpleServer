@@ -5,7 +5,7 @@ use warnings;
 
 # ABSTRACT: Minimal-configuration, read-only LDAP server
 
-our $VERSION = '0.0.14';    # VERSION
+our $VERSION = '0.0.15';    # VERSION
 
 use 5.008;
 use Carp;
@@ -131,7 +131,7 @@ sub process_request {
 
     until ( $handler->handle ) {
 
-        # empty loop
+        # intentionally empty loop
     }
     return;
 }
@@ -150,11 +150,9 @@ Net::LDAP::SimpleServer - Minimal-configuration, read-only LDAP server
 
 =head1 VERSION
 
-version 0.0.14
+version 0.0.15
 
 =head1 SYNOPSIS
-
-B<< WORK IN PROGRESS!! NOT READY TO USE YET!! >>
 
     package MyServer;
 
@@ -186,45 +184,32 @@ The default configuration file is:
 
 =head1 DESCRIPTION
 
-=for author to fill in:
-    Write a full description of the module and its features here.
-    Use subsections (=head2, =head3) as appropriate.
-
 As the name suggests, this module aims to implement a simple LDAP server,
 using many components already available in CPAN. It can be used for
 prototyping and/or development purposes. This is B<NOT> intended to be a
 production-grade server, altough some brave souls in small offices might
 use it as such.
 
-As of November 2010, the server will simply load a LDIF file and serve its
+As of April 2010, the server will load a LDIF file and serve its
 contents through the LDAP protocol. Many operations are B<NOT> available yet,
-notably writing into the directory tree, but we would like to implement that
-in a near future.
+notably writing into the directory tree.
 
-=head1 CONSTRUCTOR
+The constructors will follow the rules defined by L<Net::Server>, but the most
+useful are the two forms described below.
 
-The constructors will follow the rules defined by L<Net::Server>, but most
-notably we have the two forms below:
+=head1 METHODS
 
-=over
-
-=item new()
+=head2 new()
 
 Attempts to create a server by using the default configuration file,
 C<< ${HOME}/.ldapsimpleserver/config >>.
 
-=item new( HASHREF )
+=head2 new( HASHREF )
 
 Attempts to create a server by using the options specified in a hash
 reference rather than reading them from a configuration file.
 
-=back
-
-=head1 METHODS
-
-=over
-
-=item options()
+=head2 options()
 
 As specified in L<Net::Server>, this method creates new options for the,
 server, namely:
@@ -239,7 +224,7 @@ root_pw - the password for root_dn
 
 =back
 
-=item default_values()
+=head2 default_values()
 
 As specified in L<Net::Server>, this method provides default values for a
 number of options. In Net::LDAP::SimpleServer, this method is defined as:
@@ -261,48 +246,17 @@ Notice that we do set a default password for the C<< cn=root >> DN. This
 allows for out-of-the-box testing, but make sure you change the password
 when putting this to production use.
 
-=item post_configure_hook()
+=head2 post_configure_hook()
 
 Method specified by L<Net::Server> to validate the passed options
 
-=item process_request()
+=head2 process_request()
 
 Method specified by L<Net::Server> to actually handle one connection. In this
 module it basically delegates the processing to
 L<Net::LDAP::SimpleServer::ProtocolHandler>.
 
-=back
-
-=head1 DIAGNOSTICS
-
-=for author to fill in:
-    List every single error and warning message that the module can
-    generate (even the ones that will "never happen"), with a full
-    explanation of each problem, one or more likely causes, and any
-    suggested remedies.
-
-=over
-
-=item C<< Error message here, perhaps with %s placeholders >>
-
-[Description of error here]
-
-=item C<< Another error message here >>
-
-[Description of error here]
-
-[Et cetera, et cetera]
-
-=back
-
 =head1 CONFIGURATION AND ENVIRONMENT
-
-=for author to fill in:
-    A full explanation of any configuration system(s) used by the
-    module, including the names and locations of any configuration
-    files, and the meaning of any environment variables or properties
-    that can be set. These descriptions must also include details of any
-    configuration language used.
 
 Net::LDAP::SimpleServer may use a configuration file to specify the
 server settings. If no file is specified and options are not passed
@@ -318,35 +272,7 @@ C<< ${HOME}/.ldapsimpleserver/config >>.
     #user_id_attr uid
     #user_pw_attr password
 
-=head1 DEPENDENCIES
-
-=for author to fill in:
-    A list of all the other modules that this module relies upon,
-    including any restrictions on versions, and an indication whether
-    the module is part of the standard Perl distribution, part of the
-    module's distribution, or must be installed separately. ]
-
-L<< Net::LDAP >>
-
-L<< Net::LDAP::Server >>
-
-L<< Net::Server >>
-
-L<< UNIVERSAL::isa >>
-
-L<< Carp >>
-
-L<< File::HomeDir >>
-
-L<< File::Spec::Functions >>
-
-L<< Scalar::Util >>
-
-L<< Config::General >>
-
-L<< Net::LDAP::SimpleServer::LDIFStore >>
-
-=for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders
+=for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders metacpan
 
 =head1 SUPPORT
 
@@ -375,7 +301,7 @@ L<http://search.cpan.org/dist/Net-LDAP-SimpleServer>
 
 AnnoCPAN
 
-The AnnoCPAN is a website that allows community annonations of Perl module documentation.
+The AnnoCPAN is a website that allows community annotations of Perl module documentation.
 
 L<http://annocpan.org/dist/Net-LDAP-SimpleServer>
 
@@ -415,7 +341,7 @@ L<http://www.cpantesters.org/distro/N/Net-LDAP-SimpleServer>
 
 CPAN Testers Matrix
 
-The CPAN Testers Matrix is a website that provides a visual way to determine what Perls/platforms PASSed for a distribution.
+The CPAN Testers Matrix is a website that provides a visual overview of the test results for a distribution on various Perls/platforms.
 
 L<http://matrix.cpantesters.org/?dist=Net-LDAP-SimpleServer>
 
@@ -456,7 +382,7 @@ from your repository :)
 
 L<https://github.com/russoz/Net-LDAP-SimpleServer>
 
-  git clone https://github.com/russoz/Net-LDAP-SimpleServer
+  git clone https://github.com/russoz/Net-LDAP-SimpleServer.git
 
 =head1 AUTHOR
 
@@ -471,10 +397,8 @@ the same terms as the Perl 5 programming language system itself.
 
 =head1 BUGS AND LIMITATIONS
 
-No bugs have been reported.
-
-Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org>.
+You can make new bug reports, and view existing ones, through the
+web interface at L<http://rt.cpan.org>.
 
 =head1 DISCLAIMER OF WARRANTY
 

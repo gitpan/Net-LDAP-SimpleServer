@@ -9,46 +9,50 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'Minimal-configuration, read-only LDAP server',
-  'AUTHOR' => 'Alexei Znamensky <russoz@cpan.org>',
-  'BUILD_REQUIRES' => {
-    'English' => '0',
-    'File::Find' => '0',
-    'File::Temp' => '0',
-    'IO::Pipe' => '0',
-    'Net::LDAP' => '0',
-    'Proc::Fork' => '0',
-    'Test::More' => '0.88',
-    'Test::UseAllModules' => '0'
+  "ABSTRACT" => "Minimal-configuration, read-only LDAP server",
+  "AUTHOR" => "Alexei Znamensky <russoz\@cpan.org>",
+  "BUILD_REQUIRES" => {
+    "English" => 0,
+    "File::Find" => 0,
+    "File::Temp" => 0,
+    "IO::Pipe" => 0,
+    "Net::LDAP" => 0,
+    "Proc::Fork" => 0,
+    "Test::More" => "0.88",
+    "Test::UseAllModules" => 0
   },
-  'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.30'
+  "CONFIGURE_REQUIRES" => {
+    "ExtUtils::MakeMaker" => "6.30"
   },
-  'DISTNAME' => 'Net-LDAP-SimpleServer',
-  'EXE_FILES' => [],
-  'LICENSE' => 'perl',
-  'NAME' => 'Net::LDAP::SimpleServer',
-  'PREREQ_PM' => {
-    'Carp' => '0',
-    'Data::Dumper' => '0',
-    'File::Basename' => '0',
-    'File::HomeDir' => '0',
-    'File::Path' => '2.08',
-    'File::Spec' => '0',
-    'Net::LDAP::LDIF' => '0',
-    'Net::LDAP::Server' => '0',
-    'Net::LDAP::Util' => '0',
-    'Net::Server' => '0',
-    'Scalar::Util' => '0',
-    'UNIVERSAL::isa' => '0',
-    'common::sense' => '0',
-    'constant' => '0',
-    'diagnostics' => '0',
-    'fields' => '0'
+  "DISTNAME" => "Net-LDAP-SimpleServer",
+  "EXE_FILES" => [],
+  "LICENSE" => "perl",
+  "NAME" => "Net::LDAP::SimpleServer",
+  "PREREQ_PM" => {
+    "Carp" => 0,
+    "Data::Dumper" => 0,
+    "File::Basename" => 0,
+    "File::HomeDir" => 0,
+    "File::Path" => "2.08",
+    "File::Spec" => 0,
+    "Net::LDAP::FilterMatch" => 0,
+    "Net::LDAP::LDIF" => 0,
+    "Net::LDAP::Server" => 0,
+    "Net::LDAP::Util" => 0,
+    "Net::Server" => 0,
+    "Scalar::Util" => 0,
+    "UNIVERSAL::isa" => 0,
+    "base" => 0,
+    "common::sense" => 0,
+    "constant" => 0,
+    "diagnostics" => 0,
+    "fields" => 0,
+    "strict" => 0,
+    "warnings" => 0
   },
-  'VERSION' => '0.0.14',
-  'test' => {
-    'TESTS' => 't/*.t'
+  "VERSION" => "0.0.15",
+  "test" => {
+    "TESTS" => "t/*.t"
   }
 );
 

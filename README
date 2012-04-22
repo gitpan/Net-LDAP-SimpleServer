@@ -2,11 +2,9 @@ NAME
     Net::LDAP::SimpleServer - Minimal-configuration, read-only LDAP server
 
 VERSION
-    version 0.0.14
+    version 0.0.15
 
 SYNOPSIS
-    WORK IN PROGRESS!! NOT READY TO USE YET!!
-
         package MyServer;
 
         use Net::LDAP::SimpleServer;
@@ -42,72 +40,61 @@ DESCRIPTION
     a production-grade server, altough some brave souls in small offices
     might use it as such.
 
-    As of November 2010, the server will simply load a LDIF file and serve
-    its contents through the LDAP protocol. Many operations are NOT
-    available yet, notably writing into the directory tree, but we would
-    like to implement that in a near future.
+    As of April 2010, the server will load a LDIF file and serve its
+    contents through the LDAP protocol. Many operations are NOT available
+    yet, notably writing into the directory tree.
 
-CONSTRUCTOR
-    The constructors will follow the rules defined by Net::Server, but most
-    notably we have the two forms below:
-
-    new()
-        Attempts to create a server by using the default configuration file,
-        "${HOME}/.ldapsimpleserver/config".
-
-    new( HASHREF )
-        Attempts to create a server by using the options specified in a hash
-        reference rather than reading them from a configuration file.
+    The constructors will follow the rules defined by Net::Server, but the
+    most useful are the two forms described below.
 
 METHODS
-    options()
-        As specified in Net::Server, this method creates new options for
-        the, server, namely:
+  new()
+    Attempts to create a server by using the default configuration file,
+    "${HOME}/.ldapsimpleserver/config".
 
-            ldap_data - the LDIF data file used by LDIFStore
+  new( HASHREF )
+    Attempts to create a server by using the options specified in a hash
+    reference rather than reading them from a configuration file.
 
-            root_dn - the administrator DN of the repository
+  options()
+    As specified in Net::Server, this method creates new options for the,
+    server, namely:
 
-            root_pw - the password for root_dn
+        ldap_data - the LDIF data file used by LDIFStore
 
-    default_values()
-        As specified in Net::Server, this method provides default values for
-        a number of options. In Net::LDAP::SimpleServer, this method is
-        defined as:
+        root_dn - the administrator DN of the repository
 
-            sub default_values {
-                return {
-                    host         => '*',
-                    port         => 389,
-                    proto        => 'tcp',
-                    root_dn      => 'cn=root',
-                    root_pw      => 'ldappw',
-                    syslog_ident => 'Net::LDAP::SimpleServer-'
-                        . $Net::LDAP::SimpleServer::VERSION,
-                    conf_file => DEFAULT_CONFIG_FILE,
-                };
-            }
+        root_pw - the password for root_dn
 
-        Notice that we do set a default password for the "cn=root" DN. This
-        allows for out-of-the-box testing, but make sure you change the
-        password when putting this to production use.
+  default_values()
+    As specified in Net::Server, this method provides default values for a
+    number of options. In Net::LDAP::SimpleServer, this method is defined
+    as:
 
-    post_configure_hook()
-        Method specified by Net::Server to validate the passed options
+        sub default_values {
+            return {
+                host         => '*',
+                port         => 389,
+                proto        => 'tcp',
+                root_dn      => 'cn=root',
+                root_pw      => 'ldappw',
+                syslog_ident => 'Net::LDAP::SimpleServer-'
+                    . $Net::LDAP::SimpleServer::VERSION,
+                conf_file => DEFAULT_CONFIG_FILE,
+            };
+        }
 
-    process_request()
-        Method specified by Net::Server to actually handle one connection.
-        In this module it basically delegates the processing to
-        Net::LDAP::SimpleServer::ProtocolHandler.
+    Notice that we do set a default password for the "cn=root" DN. This
+    allows for out-of-the-box testing, but make sure you change the password
+    when putting this to production use.
 
-DIAGNOSTICS
-    "Error message here, perhaps with %s placeholders"
-        [Description of error here]
+  post_configure_hook()
+    Method specified by Net::Server to validate the passed options
 
-    "Another error message here"
-        [Description of error here]
-
-        [Et cetera, et cetera]
+  process_request()
+    Method specified by Net::Server to actually handle one connection. In
+    this module it basically delegates the processing to
+    Net::LDAP::SimpleServer::ProtocolHandler.
 
 CONFIGURATION AND ENVIRONMENT
     Net::LDAP::SimpleServer may use a configuration file to specify the
@@ -123,27 +110,6 @@ CONFIGURATION AND ENVIRONMENT
         #user_tree dc=some,dc=subtree,dc=com
         #user_id_attr uid
         #user_pw_attr password
-
-DEPENDENCIES
-    Net::LDAP
-
-    Net::LDAP::Server
-
-    Net::Server
-
-    UNIVERSAL::isa
-
-    Carp
-
-    File::HomeDir
-
-    File::Spec::Functions
-
-    Scalar::Util
-
-    Config::General
-
-    Net::LDAP::SimpleServer::LDIFStore
 
 SUPPORT
   Perldoc
@@ -164,7 +130,7 @@ SUPPORT
 
     *   AnnoCPAN
 
-        The AnnoCPAN is a website that allows community annonations of Perl
+        The AnnoCPAN is a website that allows community annotations of Perl
         module documentation.
 
         <http://annocpan.org/dist/Net-LDAP-SimpleServer>
@@ -198,8 +164,8 @@ SUPPORT
 
     *   CPAN Testers Matrix
 
-        The CPAN Testers Matrix is a website that provides a visual way to
-        determine what Perls/platforms PASSed for a distribution.
+        The CPAN Testers Matrix is a website that provides a visual overview
+        of the test results for a distribution on various Perls/platforms.
 
         <http://matrix.cpantesters.org/?dist=Net-LDAP-SimpleServer>
 
@@ -235,7 +201,7 @@ SUPPORT
 
     <https://github.com/russoz/Net-LDAP-SimpleServer>
 
-      git clone https://github.com/russoz/Net-LDAP-SimpleServer
+      git clone https://github.com/russoz/Net-LDAP-SimpleServer.git
 
 AUTHOR
     Alexei Znamensky <russoz@cpan.org>
@@ -247,10 +213,8 @@ COPYRIGHT AND LICENSE
     the same terms as the Perl 5 programming language system itself.
 
 BUGS AND LIMITATIONS
-    No bugs have been reported.
-
-    Please report any bugs or feature requests through the web interface at
-    <http://rt.cpan.org>.
+    You can make new bug reports, and view existing ones, through the web
+    interface at <http://rt.cpan.org>.
 
 DISCLAIMER OF WARRANTY
     BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY

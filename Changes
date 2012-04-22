@@ -1,8 +1,16 @@
 Revision History for Net-LDAP-SimpleServer
 ==========================================
 
-0.0.14
-------
+v0.0.15 2012-04-21
+------------------
+
+commit c6aaacba7ea6aaec30fcc8e12b1aaf8cac613002
+Author: Alexei Znamensky <russoz@cpan.org>
+
+    searchable directory!
+
+v0.0.14 2011-08-13
+------------------
 
 commit ad14dcea3da95d5d5b2d6c47786baf8637bcf32a
 Author: Alexei Znamensky <russoz@cpan.org>

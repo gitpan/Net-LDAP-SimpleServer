@@ -22,10 +22,11 @@ t/02-handler.t
 t/02-store.t
 t/03-param.t
 t/04-bind.t
+t/05-search.t
 t/author-critic.t
+t/author-test-eol.t
 t/release-dist-manifest.t
 t/release-distmeta.t
-t/release-eol.t
 t/release-kwalitee.t
 t/release-meta-json.t
 t/release-minimum-version.t

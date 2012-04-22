@@ -60,6 +60,7 @@ eval { $v .= pmver('File::Spec','any version') };
 eval { $v .= pmver('File::Temp','any version') };
 eval { $v .= pmver('IO::Pipe','any version') };
 eval { $v .= pmver('Net::LDAP','any version') };
+eval { $v .= pmver('Net::LDAP::FilterMatch','any version') };
 eval { $v .= pmver('Net::LDAP::LDIF','any version') };
 eval { $v .= pmver('Net::LDAP::Server','any version') };
 eval { $v .= pmver('Net::LDAP::Util','any version') };
@@ -69,10 +70,13 @@ eval { $v .= pmver('Scalar::Util','any version') };
 eval { $v .= pmver('Test::More','0.88') };
 eval { $v .= pmver('Test::UseAllModules','any version') };
 eval { $v .= pmver('UNIVERSAL::isa','any version') };
+eval { $v .= pmver('base','any version') };
 eval { $v .= pmver('common::sense','any version') };
 eval { $v .= pmver('constant','any version') };
 eval { $v .= pmver('diagnostics','any version') };
 eval { $v .= pmver('fields','any version') };
+eval { $v .= pmver('strict','any version') };
+eval { $v .= pmver('warnings','any version') };
 
 
 

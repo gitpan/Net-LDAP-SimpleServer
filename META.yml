@@ -14,7 +14,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.200012, CPAN::Meta::Converter version 2.112150'
+generated_by: 'Dist::Zilla version 4.300014, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -27,18 +27,22 @@ requires:
   File::HomeDir: 0
   File::Path: 2.08
   File::Spec: 0
+  Net::LDAP::FilterMatch: 0
   Net::LDAP::LDIF: 0
   Net::LDAP::Server: 0
   Net::LDAP::Util: 0
   Net::Server: 0
   Scalar::Util: 0
   UNIVERSAL::isa: 0
+  base: 0
   common::sense: 0
   constant: 0
   diagnostics: 0
   fields: 0
   perl: 5.010
+  strict: 0
+  warnings: 0
 resources:
   homepage: https://github.com/russoz/Net-LDAP-SimpleServer
-  repository: https://github.com/russoz/Net-LDAP-SimpleServer
-version: 0.0.14
+  repository: https://github.com/russoz/Net-LDAP-SimpleServer.git
+version: 0.0.15
