@@ -12,7 +12,8 @@ my %WriteMakefileArgs = (
   "ABSTRACT" => "Minimal-configuration, read-only LDAP server",
   "AUTHOR" => "Alexei Znamensky <russoz\@cpan.org>",
   "BUILD_REQUIRES" => {
-    "English" => 0,
+    "Authen::SASL" => 0,
+    "Exporter" => 0,
     "File::Find" => 0,
     "File::Temp" => 0,
     "IO::Pipe" => 0,
@@ -25,7 +26,9 @@ my %WriteMakefileArgs = (
     "ExtUtils::MakeMaker" => "6.30"
   },
   "DISTNAME" => "Net-LDAP-SimpleServer",
-  "EXE_FILES" => [],
+  "EXE_FILES" => [
+    "bin/ldapd.pl"
+  ],
   "LICENSE" => "perl",
   "NAME" => "Net::LDAP::SimpleServer",
   "PREREQ_PM" => {
@@ -35,22 +38,19 @@ my %WriteMakefileArgs = (
     "File::HomeDir" => 0,
     "File::Path" => "2.08",
     "File::Spec" => 0,
+    "Net::LDAP::Constant" => 0,
     "Net::LDAP::FilterMatch" => 0,
     "Net::LDAP::LDIF" => 0,
     "Net::LDAP::Server" => 0,
     "Net::LDAP::Util" => 0,
-    "Net::Server" => 0,
     "Scalar::Util" => 0,
     "UNIVERSAL::isa" => 0,
     "base" => 0,
-    "common::sense" => 0,
-    "constant" => 0,
-    "diagnostics" => 0,
     "fields" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.0.15",
+  "VERSION" => "0.0.16",
   "test" => {
     "TESTS" => "t/*.t"
   }

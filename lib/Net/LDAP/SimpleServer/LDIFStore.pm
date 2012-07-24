@@ -2,11 +2,10 @@ package Net::LDAP::SimpleServer::LDIFStore;
 
 use strict;
 use warnings;
-use diagnostics;
 
 # ABSTRACT: Data store to support Net::LDAP::SimpleServer
 
-our $VERSION = '0.0.15';    # VERSION
+our $VERSION = '0.0.16';    # VERSION
 
 use 5.010;
 use Carp qw/carp croak/;
@@ -113,7 +112,7 @@ Net::LDAP::SimpleServer::LDIFStore - Data store to support Net::LDAP::SimpleServ
 
 =head1 VERSION
 
-version 0.0.15
+version 0.0.16
 
 =head1 SYNOPSIS
 
@@ -197,7 +196,7 @@ Alexei Znamensky <russoz@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Alexei Znamensky.
+This software is copyright (c) 2012 by Alexei Znamensky.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
@@ -234,4 +233,5 @@ DAMAGES.
 
 
 __END__
+
 

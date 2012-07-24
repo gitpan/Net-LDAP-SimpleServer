@@ -34,3 +34,4 @@ ok( $list, 'Returns a list' );
 is( ref($list), 'ARRAY', 'The list is an array-reference' );
 my @list = @{$list};
 is( scalar(@list), 1, 'the list contains one element' );
+

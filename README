@@ -2,11 +2,9 @@ NAME
     Net::LDAP::SimpleServer - Minimal-configuration, read-only LDAP server
 
 VERSION
-    version 0.0.15
+    version 0.0.16
 
 SYNOPSIS
-        package MyServer;
-
         use Net::LDAP::SimpleServer;
 
         # Or, specifying a Net::Server personality
@@ -23,7 +21,7 @@ SYNOPSIS
         # passing configurations in a hash
         my $server = Net::LDAP::SimpleServer->new({
             port => 5000,
-            ldap_data => '/path/to/data.ldif',
+            data_file => '/path/to/data.ldif',
         });
 
         # make it spin
@@ -60,7 +58,7 @@ METHODS
     As specified in Net::Server, this method creates new options for the,
     server, namely:
 
-        ldap_data - the LDIF data file used by LDIFStore
+        data_file - the LDIF data file used by LDIFStore
 
         root_dn - the administrator DN of the repository
 
@@ -80,7 +78,7 @@ METHODS
                 root_pw      => 'ldappw',
                 syslog_ident => 'Net::LDAP::SimpleServer-'
                     . $Net::LDAP::SimpleServer::VERSION,
-                conf_file => DEFAULT_CONFIG_FILE,
+                conf_file => $DEFAULT_CONFIG_FILE,
             };
         }
 
@@ -102,7 +100,7 @@ CONFIGURATION AND ENVIRONMENT
     hash, this module will look for a default configuration file named
     "${HOME}/.ldapsimpleserver/config".
 
-        ldap_data /path/to/a/ldif/file.ldif
+        data_file /path/to/a/ldif/file.ldif
         #port 389
         #root_dn cn=root
         #root_pw somepassword
@@ -207,7 +205,7 @@ AUTHOR
     Alexei Znamensky <russoz@cpan.org>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2011 by Alexei Znamensky.
+    This software is copyright (c) 2012 by Alexei Znamensky.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.
