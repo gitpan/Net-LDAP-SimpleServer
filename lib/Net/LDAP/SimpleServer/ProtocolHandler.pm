@@ -5,7 +5,7 @@ use warnings;
 
 # ABSTRACT: LDAP protocol handler used with Net::LDAP::SimpleServer
 
-our $VERSION = '0.0.16';    # VERSION
+our $VERSION = '0.0.17';    # VERSION
 
 use Net::LDAP::Server;
 use base 'Net::LDAP::Server';
@@ -71,7 +71,7 @@ sub unbind {
     return _make_result(LDAP_SUCCESS);
 }
 
-sub bind {    ## no critic
+sub bind {    ## no critic (ProhibitBuiltinHomonyms)
     my ( $self, $request ) = @_;
 
     #print STDERR '=' x 70 . "\n";
@@ -150,7 +150,7 @@ Net::LDAP::SimpleServer::ProtocolHandler - LDAP protocol handler used with Net::
 
 =head1 VERSION
 
-version 0.0.16
+version 0.0.17
 
 =head1 SYNOPSIS
 
@@ -178,13 +178,13 @@ Creates a new handler for the LDAP protocol, using STORE as the backend
 where the directory data is stored. The rest of the IOHANDLES are the same
 as in the L<Net::LDAP::Server> module.
 
-=head2 unbind()
-
-Unbinds the connection to the server.
-
 =head2 bind( REQUEST )
 
 Handles a bind REQUEST from the LDAP client.
+
+=head2 unbind()
+
+Unbinds the connection to the server.
 
 =head2 search( REQUEST )
 

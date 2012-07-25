@@ -43,6 +43,7 @@ my %WriteMakefileArgs = (
     "Net::LDAP::LDIF" => 0,
     "Net::LDAP::Server" => 0,
     "Net::LDAP::Util" => 0,
+    "Net::Server" => "2.003",
     "Scalar::Util" => 0,
     "UNIVERSAL::isa" => 0,
     "base" => 0,
@@ -50,7 +51,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.0.16",
+  "VERSION" => "0.0.17",
   "test" => {
     "TESTS" => "t/*.t"
   }

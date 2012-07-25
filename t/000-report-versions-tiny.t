@@ -67,6 +67,7 @@ eval { $v .= pmver('Net::LDAP::FilterMatch','any version') };
 eval { $v .= pmver('Net::LDAP::LDIF','any version') };
 eval { $v .= pmver('Net::LDAP::Server','any version') };
 eval { $v .= pmver('Net::LDAP::Util','any version') };
+eval { $v .= pmver('Net::Server','2.003') };
 eval { $v .= pmver('Proc::Fork','any version') };
 eval { $v .= pmver('Scalar::Util','any version') };
 eval { $v .= pmver('Test::More','0.88') };

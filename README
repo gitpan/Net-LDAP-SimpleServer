@@ -2,7 +2,7 @@ NAME
     Net::LDAP::SimpleServer - Minimal-configuration, read-only LDAP server
 
 VERSION
-    version 0.0.16
+    version 0.0.17
 
 SYNOPSIS
         use Net::LDAP::SimpleServer;
@@ -27,9 +27,8 @@ SYNOPSIS
         # make it spin
         $server->run();
 
-    The default configuration file is:
-
-        ${HOME}/.ldapsimpleserver/config
+        # make it spin with options
+        $server->run({ allow_anon => 0 });
 
 DESCRIPTION
     As the name suggests, this module aims to implement a simple LDAP
@@ -45,49 +44,50 @@ DESCRIPTION
     The constructors will follow the rules defined by Net::Server, but the
     most useful are the two forms described below.
 
+    "Net::LDAP::SimpleServer" will use the directory "${HOME}/.ldapsimple"
+    as a "BASEDIR" for server files. If there exists a file:
+
+        BASEDIR/server.conf
+
+    it will be used as the default confguration file. Similarly, if there
+    exists a file:
+
+        BASEDIR/server.ldif
+
+    it will be used as the default data file for this server.
+
 METHODS
   new()
-    Attempts to create a server by using the default configuration file,
-    "${HOME}/.ldapsimpleserver/config".
+    Instantiates a server object. If the default configuration file is
+    available, the options in it will be used.
 
   new( HASHREF )
-    Attempts to create a server by using the options specified in a hash
-    reference rather than reading them from a configuration file.
+    Instantiates a server object using the options specified in a hash
+    reference.
 
   options()
     As specified in Net::Server, this method creates new options for the,
     server, namely:
 
-        data_file - the LDIF data file used by LDIFStore
+    *   data_file - the LDIF data file used by LDIFStore
 
-        root_dn - the administrator DN of the repository
+    *   root_dn - the administrator DN of the repository
 
-        root_pw - the password for root_dn
+    *   root_pw - the password for root_dn
+
+    *   allow_anon - whether to allow for anonymous binds
 
   default_values()
     As specified in Net::Server, this method provides default values for a
-    number of options. In Net::LDAP::SimpleServer, this method is defined
-    as:
-
-        sub default_values {
-            return {
-                host         => '*',
-                port         => 389,
-                proto        => 'tcp',
-                root_dn      => 'cn=root',
-                root_pw      => 'ldappw',
-                syslog_ident => 'Net::LDAP::SimpleServer-'
-                    . $Net::LDAP::SimpleServer::VERSION,
-                conf_file => $DEFAULT_CONFIG_FILE,
-            };
-        }
+    number of options.
 
     Notice that we do set a default password for the "cn=root" DN. This
     allows for out-of-the-box testing, but make sure you change the password
     when putting this to production use.
 
   post_configure_hook()
-    Method specified by Net::Server to validate the passed options
+    Method specified by Net::Server to validate the parameters used in the
+    server instance.
 
   process_request()
     Method specified by Net::Server to actually handle one connection. In
@@ -98,16 +98,23 @@ CONFIGURATION AND ENVIRONMENT
     Net::LDAP::SimpleServer may use a configuration file to specify the
     server settings. If no file is specified and options are not passed in a
     hash, this module will look for a default configuration file named
-    "${HOME}/.ldapsimpleserver/config".
+    "BASEDIR/server.conf".
 
         data_file /path/to/a/ldif/file.ldif
         #port 389
         #root_dn cn=root
         #root_pw somepassword
+
+TODO
+    We plan to implement more options in Net::LDAP::SimpleServer. Some ideas
+    are:
+
         #objectclass_req (true|false)
         #user_tree dc=some,dc=subtree,dc=com
         #user_id_attr uid
         #user_pw_attr password
+
+    Keeping in mind we do NOT want to implement a full blown LDAP server.
 
 SUPPORT
   Perldoc

@@ -33,6 +33,7 @@ requires:
   Net::LDAP::LDIF: 0
   Net::LDAP::Server: 0
   Net::LDAP::Util: 0
+  Net::Server: 2.003
   Scalar::Util: 0
   UNIVERSAL::isa: 0
   base: 0
@@ -43,4 +44,4 @@ requires:
 resources:
   homepage: https://github.com/russoz/Net-LDAP-SimpleServer
   repository: https://github.com/russoz/Net-LDAP-SimpleServer.git
-version: 0.0.16
+version: 0.0.17

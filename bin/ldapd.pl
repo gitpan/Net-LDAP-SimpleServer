@@ -6,7 +6,7 @@ use warnings;
 # PODNAME:  ldapd.pl
 # ABSTRACT: Script to invoke the LDAP server.
 
-our $VERSION = '0.0.16';    # VERSION
+our $VERSION = '0.0.17';    # VERSION
 
 use Net::LDAP::SimpleServer;
 
@@ -29,7 +29,7 @@ ldapd.pl - Script to invoke the LDAP server.
 
 =head1 VERSION
 
-version 0.0.16
+version 0.0.17
 
 =head1 SYNOPSIS
 

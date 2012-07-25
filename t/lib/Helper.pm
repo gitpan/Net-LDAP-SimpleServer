@@ -45,6 +45,7 @@ sub _eval_params {
             local $SIG{ALRM} = sub { quit($OK) };
             alarm $alarm_wait;
 
+            diag( "Starting server on port: " . $default_test_port );
             eval {
                 use Net::LDAP::SimpleServer;
 
@@ -122,7 +123,9 @@ sub test_requests {
             my $s = Net::LDAP::SimpleServer->new($server_fixed_opts);
 
             # run server
-            diag('Net::LDAP::SimpleServer Starting         [Fork]');
+            diag(   'Net::LDAP::SimpleServer Starting :'
+                  . $default_test_port
+                  . '  [Fork]' );
             $s->run($server_opts);
             diag('Net::LDAP::SimpleServer Server stopped   [Fork]');
             diag('There is no                             [Spoon]');
